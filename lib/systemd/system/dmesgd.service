@@ -1,0 +1,10 @@
+
+[Unit]
+Description=Disable dmesg output
+
+[Service]
+Type=oneshot
+ExecStart=dmesg -D
+
+[Install]
+WantedBy=multi-user.target
