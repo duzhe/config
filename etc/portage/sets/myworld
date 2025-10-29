@@ -5,6 +5,7 @@ sys-fs/exfat-utils
 sys-kernel/dracut
 sys-kernel/gentoo-sources
 sys-kernel/linux-firmware
+sys-firmware/intel-microcode
 
 # sound
 media-plugins/alsa-plugins
@@ -21,6 +22,7 @@ app-editors/vim
 app-laptop/laptop-mode-tools
 app-misc/tmux
 app-shells/bash-completion
+app-shells/fish
 app-text/dos2unix
 app-text/tree
 dev-util/cscope
@@ -54,7 +56,11 @@ x11-apps/xbacklight
 x11-misc/redshift
 
 # printer
+net-print/cups
+# cups not depend on cups-filters since 2.4.7-r2 but it's required   2025-05-13 du
+net-print/cups-filters
 net-print/hplip
+
 
 # for iphone eth
 app-pda/usbmuxd
@@ -100,6 +106,14 @@ media-fonts/terminus-font
 media-fonts/ttf-bitstream-vera
 
 # X
+x11-base/xorg-server
+x11-wm/i3
+x11-misc/rofi
+x11-misc/i3lock
+x11-misc/i3status
+x11-terms/xterm
+x11-terms/xfce4-terminal
+x11-misc/xclip
 app-i18n/ibus
 app-i18n/ibus-libpinyin
 app-i18n/ibus-pinyin
@@ -107,22 +121,16 @@ app-i18n/ibus-table
 app-i18n/ibus-table-chinese
 app-misc/evtest
 gnome-extra/gnome-commander
-media-gfx/geeqie
+# picture viewer
+#media-gfx/geeqie
+media-gfx/feh
 media-gfx/scrot
 www-client/w3m
 x11-apps/xmodmap
 x11-apps/xrandr
 x11-apps/xwininfo
-x11-base/xorg-server
 x11-misc/autorandr
-x11-misc/i3lock
-x11-misc/i3status
 x11-misc/libinput-gestures
-x11-misc/rofi
-x11-misc/xclip
-x11-terms/xfce4-terminal
-x11-terms/xterm
-x11-wm/i3
 
 # applications
 app-misc/gtypist
@@ -136,6 +144,8 @@ net-im/wechat-universal-bwrap
 www-apps/jekyll
 www-client/firefox-bin
 www-client/google-chrome
+media-sound/cmus  # mp3 player
+media-sound/id3ted # id3 editor
 
 #debug
 dev-util/debugedit

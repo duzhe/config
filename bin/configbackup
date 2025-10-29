@@ -1,0 +1,58 @@
+#!/bin/sh
+
+if [ ! -d "$CONFIG_BACKUP_DIR" ]; then
+    echo "$CONFIG_BACKUP_DIR is not a directory" >&2
+    exit 1
+fi
+
+cd "$CONFIG_BACKUP_DIR"
+
+run()
+{
+    echo run $@
+    $@ || exit 1
+}
+    
+while read FILE
+do
+    case "$FILE" in
+        '#*'):
+            # ignore comment
+            ;;
+        '~/'*):
+            DIST="${FILE#'~/'}"
+            FILE="${HOME}/${FILE#'~/'}"
+            run cp "$FILE" "$DIST"
+            run git add "$DIST"
+            ;;
+        /etc/* | /lib/*):
+            DIST="${FILE#/}"
+            run cp "$FILE" "$DIST"
+            run git add "$DIST"
+            ;;
+        *)
+            echo "$FILE is not supported" >&2
+            ;;
+    esac
+done <<'EOT'
+~/bin/pdfv
+~/bin/configbackup
+~/bin/autoxrandr
+~/bin/icloud
+~/bin/module_to_config
+~/.bashrc
+~/.bash_profile
+~/.vim/desert_patch.vim
+~/.vim/better_wincmd.vim
+~/.vimrc
+~/.tmux.conf
+~/.config/i3/config
+~/.config/i3status/config
+~/.config/redshift.conf
+~/.config/libinput-gestures.conf
+~/.Xmodmap
+~/.Xresources
+/etc/portage/make.conf
+/etc/portage/sets/myworld
+/lib/systemd/system/dmesgd.service
+EOT

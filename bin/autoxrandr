@@ -1,0 +1,32 @@
+#!/bin/env sh
+
+function log()
+{
+    echo $(date +%4Y%m%d-%H:%M:%S) $@ >> /tmp/autoxrandr.log
+}
+
+function run()
+{
+    log "CMD: " $@ 
+    $@
+}
+
+log "start"
+
+xrandr --listmonitors --verbose | while read line ; do
+    log $line
+done
+
+xrandr --listmonitors --verbose |grep "connected"| while read DEV STATE OTHER
+do
+    if [ "$DEV" == "eDP1" ] ; then
+        continue
+    fi
+    if [ "$STATE" == "connected" ] ; then
+        run xrandr --output $DEV --auto --right-of eDP1 --scale 2x2
+    else
+        run xrandr --output $DEV --off
+    fi
+done
+
+log "end"

@@ -1,0 +1,2 @@
+#!/bin/env sh
+exec google-chrome-stable --user-data-dir=$HOME/.config/google-chrome-icloud --app="https://www.icloud.com.cn/"

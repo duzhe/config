@@ -71,8 +71,10 @@ bindcode $mod+40 exec "rofi -modi drun,run -show drun -font 'hack 30'"
 #bindsym $mod+k focus down
 #bindsym $mod+l focus up
 #bindsym $mod+semicolon focus right
-bindsym $mod+j focus next
-bindsym $mod+k focus prev
+bindsym $mod+u focus left
+bindsym $mod+i focus right
+bindsym $mod+j focus up
+bindsym $mod+k focus down
 bindsym $mod+o focus output next
 
 # alternatively, you can use the cursor keys:
@@ -218,8 +220,8 @@ exec --no-startup-id ibus-daemon -d --replace
 # libinput-gestures
 exec --no-startup-id libinput-gestures
 
-# thunderbird
-assign [class = "weixin"] 8
+# weixin
+assign [class = "wechat"] 10
 
 # thunderbird
 assign [class = "thunderbird"] 9

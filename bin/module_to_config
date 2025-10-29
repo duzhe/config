@@ -1,0 +1,30 @@
+#!/bin/bash
+
+mod=$1
+modinfo $mod > /dev/null || exit
+filename=$(modinfo -F filename $mod)
+dir=$(dirname $filename | sed 's,/lib/modules/[^/]*/kernel/,,g')
+#echo $dir
+fn=$(basename $filename| sed 's/\.ko$/.o/g')
+#echo $fn
+
+MAKEFILE="/usr/src/linux/$dir/Makefile"
+#echo $MAKEFILE
+#echo $dir
+if [ -f "$MAKEFILE" ] ; then
+    #echo grep "+= $fn" "$MAKEFILE"
+    #echo ----
+    #echo $mod
+    #echo $fn
+    #grep -P   "$(printf '(?<=obj-\$\()CONFIG_\w+(?=.*\s%s\\b)' "$fn")"  "${MAKEFILE}"
+    #echo grep -o -P   "$(printf '(?<=obj-\$\()CONFIG_\w+(?=.*\s%s\\b)' "$fn")"  "${MAKEFILE}"
+    line=$(grep -o -P "$(printf '(?<=obj-\$\()CONFIG_\w+(?=.*\s%s\\b)' "$fn")"  "${MAKEFILE}")
+    #line=$(grep "+= $fn" "$MAKEFILE")
+    if [ ! -z "$line" ]; then
+        echo ${line} | tr ' ' '\n'
+        exit 0
+    fi
+fi
+
+echo "not found"
+exit 1
