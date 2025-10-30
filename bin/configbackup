@@ -22,7 +22,7 @@ do
         '~/'*):
             DIST="${FILE#'~/'}"
             FILE="${HOME}/${FILE#'~/'}"
-            run cp "$FILE" "$DIST"
+            run rsync -a "$FILE" "$DIST"
             run git add "$DIST"
             ;;
         /etc/* | /lib/*):
@@ -40,6 +40,7 @@ done <<'EOT'
 ~/bin/autoxrandr
 ~/bin/icloud
 ~/bin/module_to_config
+~/bin/kernelconfig
 ~/.bashrc
 ~/.bash_profile
 ~/.vim/desert_patch.vim

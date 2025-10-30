@@ -1,0 +1,100 @@
+#!/bin/sh
+## config kernel
+
+function config_check()
+{
+    cat $1 | grep 'scripts/config' | grep -v '^#' |  awk '{print $2,$3,$4,$5;}' |
+        while read m CONFIG val ext; do
+            if [ "a$m" = "a-k" ]; then
+                m="$CONFIG"
+                CONFIG="$val"
+                val="$ext"
+            fi
+            #echo $m $CONFIG
+            if [ "a$m" = "a--enable" ]; then
+                grep CONFIG_${CONFIG}=y .config >/dev/null || (
+                    grep CONFIG_${CONFIG}= .config >&2;
+                    echo ${CONFIG} should enabled >&2;
+                    return 6);
+            elif [ "a$m" == "a--module" ]; then
+                grep CONFIG_${CONFIG}=m .config >/dev/null || (
+                    grep CONFIG_${CONFIG}= .config;
+                    echo "${CONFIG} should be module)" >&2 ;
+                    return 2);
+            elif [ "a$m" == "a--set-val" ]; then
+                grep "CONFIG_${CONFIG}=$val" .config > /dev/null || (
+                    grep CONFIG_${CONFIG}= .config;
+                    echo "${CONFIG} should be $val" >&2;
+                    return 3);
+            elif [ "a$m" == "a--set-str" ]; then
+                grep "CONFIG_${CONFIG}=$val" .config > /dev/null || (
+                    grep CONFIG_${CONFIG}= .config;
+                    echo "${CONFIG} should be $val" >&2;
+                    return 4);
+            elif [ "a$m" == "a--disable" ]; then
+                grep CONFIG_${CONFIG}= .config > /dev/null && (
+                    grep CONFIG_${CONFIG}= .config;
+                    echo "${CONFIG} should disabled" >&2;
+                    return 5);
+            fi
+        done
+        return 0
+}
+
+run()
+{
+    echo $@
+    $@ || exit $?
+}
+
+if [ ! -d "$KERNEL_CONFIG_PATH" ]
+then
+    echo "KERNEL_CONFIG_PATH not set" >&2
+    exit 1
+fi
+
+V=$(readlink /usr/src/linux)
+
+if [ $? -ne 0 ]; then
+    echo "check /usr/src/linux" >&2
+    exit 1
+fi
+
+V=${V#linux-}
+echo "linux version: $V"
+B="b3"
+if [ -f "/boot/kernel-$V-$B" -o -d "/lib/modules/$V-$B" ]
+then
+    echo "$V-$B exists, update the local build version" >&2
+    exit 1
+fi
+echo "current build: $V-$B"
+
+cd /usr/src/linux
+# configure
+if [ -f .config ]
+then
+    run sudo mv .config .config_backup_$(date +%s)
+fi
+
+sudo make allnoconfig
+for f in $KERNEL_CONFIG_PATH/??-*.sh
+do
+    run sudo sh "$f"
+done
+run sudo make olddefconfig
+run sudo ./scripts/config --set-str LOCALVERSION "-$B"
+
+for f in $KERNEL_CONFIG_PATH/??-*.sh
+do
+    run config_check "$f"
+done
+
+# build
+run sudo make -j4
+
+# install
+run sudo make modules_install
+run sudo cp arch/x86/boot/bzImage "/boot/kernel-${V}-$B"
+run sudo dracut "/boot/initramfs-${V}-${B}.img" "$V-$B"
+run sudo grub-mkconfig -o /boot/grub/grub.cfg

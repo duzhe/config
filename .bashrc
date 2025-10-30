@@ -60,10 +60,13 @@ export PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \[\033[00m\]$(__git_ps1 "(%s)
 # for config backup
 export CONFIG_BACKUP_DIR=~/Repository/github.com/duzhe/config
 
-# fish
-export BROWSER="google-chrome"
+# for kernelconfig
+export KERNEL_CONFIG_PATH=~/Repository/github.com/duzhe/config/kernel
 
-if [[ -n $DISPLAY ]]
+# fish
+export BROWSER="google-chrome-stable"
+
+if [[ -n $DISPLAY  && (! -n $NOFISH) ]]
 then
     exec fish
 fi
