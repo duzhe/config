@@ -63,7 +63,7 @@ fi
 
 V=${V#linux-}
 echo "linux version: $V"
-B="b3"
+B="b1"
 if [ -f "/boot/kernel-$V-$B" -o -d "/lib/modules/$V-$B" ]
 then
     echo "$V-$B exists, update the local build version" >&2

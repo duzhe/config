@@ -33,6 +33,7 @@ net-analyzer/tcpreplay
 net-analyzer/traceroute
 net-dialup/ppp
 net-dns/bind-tools
+net-dns/dnsmasq
 net-fs/nfs-utils
 net-fs/samba
 net-misc/dhcpcd
@@ -171,5 +172,5 @@ app-containers/docker-cli
 app-containers/docker-buildx
 app-containers/docker
 dev-libs/libcgroup
-sys-cluster/minikube
-app-admin/helm
+#sys-cluster/minikube
+#app-admin/helm
