@@ -24,3 +24,6 @@
 ./scripts/config --disable MEDIA_RADIO_SUPPORT
 ./scripts/config --disable MEDIA_SDR_SUPPORT
 ./scripts/config --disable MEDIA_TEST_SUPPORT
+
+# required by systemctl suspend-then-hibernate
+./scripts/config --enable  RTC_CLASS
