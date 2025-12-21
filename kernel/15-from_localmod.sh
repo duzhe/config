@@ -39,7 +39,6 @@
 ./scripts/config --enable INTEL_TCC_COOLING
 ./scripts/config --enable SOUNDWIRE_INTEL
 ./scripts/config --enable SOUNDWIRE_CADENCE
-#./scripts/config --enable USB_VIDEO_CLASS
 #./scripts/config --enable BT_RTL
 #./scripts/config --enable UVC_COMMON
 #./scripts/config --enable BT_BCM

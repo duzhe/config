@@ -20,6 +20,7 @@ Plugin 'git@github.com:vim-jp/vim-cpp'
 Plugin 'git@github.com:vim-utils/vim-man.git'
 Plugin 'git@github.com:gauteh/vim-cppman'
 Plugin 'funorpain/vim-cpplint'
+Plugin 'git@github.com:xawiu/pretty-css.vim'
 " do not map Ctrl-N and Ctrl-P
 let g:tagbar_map_nexttag = ""
 let g:tagbar_map_prevtag = ""
@@ -69,6 +70,7 @@ source ~/.vim/desert_patch.vim
 let mapleader = ","
 
 " cscope
+nmap <leader>s :cs find a <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <leader>c :cs find c <C-R>=expand("<cword>")<CR><CR>

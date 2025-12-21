@@ -6,6 +6,9 @@ sys-kernel/dracut
 sys-kernel/gentoo-sources
 sys-kernel/linux-firmware
 sys-firmware/intel-microcode
+sys-block/parted
+sys-boot/os-prober
+sys-fs/mdadm
 
 # sound
 media-plugins/alsa-plugins
@@ -27,7 +30,8 @@ app-text/dos2unix
 app-text/tree
 dev-util/cscope
 dev-util/ctags
-net-analyzer/netcat
+#net-analyzer/netcat
+net-analyzer/openbsd-netcat
 net-analyzer/tcpdump
 net-analyzer/tcpreplay
 net-analyzer/traceroute
@@ -55,6 +59,13 @@ sys-process/lsof
 sys-process/numactl
 x11-apps/xbacklight
 x11-misc/redshift
+sys-process/bottom
+# tools write in rust
+sys-apps/dstat
+sys-apps/pv
+sci-calculators/xsv
+sys-apps/ripgrep
+
 
 # printer
 net-print/cups
@@ -76,11 +87,11 @@ dev-util/pkgdev
 
 #fonts
 ## chinese
+media-fonts/wqy-zenhei
 media-fonts/noto-cjk
 media-fonts/source-han-sans
-media-fonts/wqy-bitmapfont
-media-fonts/wqy-microhei
-media-fonts/wqy-zenhei
+#media-fonts/wqy-bitmapfont
+#media-fonts/wqy-microhei
 ## mono
 media-fonts/hack
 media-fonts/ibm-plex
@@ -110,8 +121,10 @@ media-fonts/ttf-bitstream-vera
 x11-base/xorg-server
 x11-wm/i3
 x11-misc/rofi
+x11-misc/dmenu
 x11-misc/i3lock
 x11-misc/i3status
+gnome-base/gnome-keyring
 x11-terms/xterm
 x11-terms/xfce4-terminal
 x11-misc/xclip
@@ -132,6 +145,9 @@ x11-apps/xrandr
 x11-apps/xwininfo
 x11-misc/autorandr
 x11-misc/libinput-gestures
+x11-apps/xdpyinfo
+sys-apps/flatpak
+sys-apps/xdg-desktop-portal-gtk
 
 # applications
 app-misc/gtypist
@@ -147,11 +163,17 @@ www-client/firefox-bin
 www-client/google-chrome
 media-sound/cmus  # mp3 player
 media-sound/id3ted # id3 editor
+media-gfx/librecad
+app-text/dictd
+app-i18n/translate-shell
+app-editors/vscode::gentoo
 
 #debug
 dev-util/debugedit
 dev-debug/strace
 x11-apps/xlsfonts
+### from pf4public
+app-misc/font-manager
 dev-debug/systemtap
 
 # develop
@@ -163,14 +185,23 @@ dev-db/redis
 dev-db/mysql
 app-text/doxygen
 app-misc/jq
+app-misc/yq
 net-libs/grpc
 dev-cpp/gtest
 app-doc/cppman
 dev-python/pip
-app-emulation/qemu
 app-containers/docker-cli
 app-containers/docker-buildx
 app-containers/docker
 dev-libs/libcgroup
+dev-debug/valgrind
 #sys-cluster/minikube
 #app-admin/helm
+
+# qemu
+app-emulation/qemu
+app-emulation/libvirt
+net-misc/tigervnc
+
+# fingerprint
+sys-auth/fprintd

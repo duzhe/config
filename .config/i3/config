@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:monospace 8
+font pango:monospace 10
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -61,20 +61,17 @@ bindsym $mod+q kill
 # bindsym $mod+d exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
-bindcode $mod+40 exec "rofi -modi drun,run -show drun -font 'hack 30'"
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun -font 'hack 30'"
+bindsym $mod+d exec "rofi -modi drun,run -show drun -font 'hack 30'"
 # There also is i3-dmenu-desktop which only displays applications shipping a
 # .desktop file. It is a wrapper around dmenu, so you need that installed.
 # bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-#bindsym $mod+j focus left
-#bindsym $mod+k focus down
-#bindsym $mod+l focus up
-#bindsym $mod+semicolon focus right
 bindsym $mod+u focus left
 bindsym $mod+i focus right
-bindsym $mod+j focus up
-bindsym $mod+k focus down
+bindsym $mod+j focus down
+bindsym $mod+k focus up
 bindsym $mod+o focus output next
 
 # alternatively, you can use the cursor keys:
@@ -84,10 +81,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -109,7 +106,7 @@ bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -119,13 +116,14 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-#bindsym $mod+a focus parent
+bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
 
 # Define names for default workspaces for which we configure key bindings later on.
 # We use variables to avoid repeating the names in multiple places.
+set $ws0 "0"
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -138,6 +136,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
+bindsym $mod+grave workspace number $ws0
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -167,10 +166,13 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 #bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-bindsym $mod+Shift+e exec i3-msg exit
+#bindsym $mod+Shift+e exec i3-msg exit
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'exit i3? ' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # browser
 bindsym $mod+b exec google-chrome-stable
+set $incognito_dir "~/.google_chrome_incognito_user_data_template/" 
+bindsym $mod+n exec google-chrome-stable --incognito --user-data-dir="$(mktemp -d | tee /dev/stderr | xargs rsync -r $incognito_dir 2>&1)"
 
 # PrintScreen
 bindsym Print      --release exec --no-startup-id scrot    -F ~/ScreenShot/$(date +%4Y%m%d-%H%M%S).png -e 'xclip -selection clipboard -target image/png -i $f'
@@ -185,16 +187,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym u resize shrink width 10 px or 10 ppt
+        bindsym i resize grow width 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
 
         # back to normal: Enter or Escape or $mod+r
         bindsym Return mode "default"
@@ -207,10 +209,11 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        position top
         status_command i3status
         hidden_state hide
         mode hide
-        font pango:DejaVu Sans Mono 12
+        font pango:DejaVu Sans Mono 16
 }
 
 
@@ -225,19 +228,46 @@ assign [class = "wechat"] 10
 
 # thunderbird
 assign [class = "thunderbird"] 9
-#exec thunderbird-bin
+for_window [ class = "thunderbird" ] fullscreen enable
+exec --no-startup-id thunderbird-bin
 
 # start a terminal
 exec i3-sensible-terminal
 
-# Toggle between dock mode and hide mode
-bindsym $mod+n bar mode toggle
+# Toggle beteen dock mode and hide mode
+bindsym $mod+m bar mode toggle
 
+# border
 default_border pixel 1
-workspace $ws2 output HDMI1
+default_floating_border normal
+bindsym $mod+Shift+t border normal
+bindsym $mod+Shift+u border pixel 1
+
+# ?? workspace $ws2 output HDMI1
 
 # autorandr
 exec --no-startup-id autorandr --change --default default
 
 # Moving workspaces between screens
 bindsym $mod+p move workspace to output right
+
+# scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# use kd to show translate
+for_window [title = "KDTerm"] move scratchpad
+bindsym --release $mod+w exec sh -c 'xclip -o | socat - unix-connect:/tmp/kd.sock'; [title="KDTerm"] focus
+exec xfce4-terminal -T "KDTerm" -e 'bash -c "while true; do w=$(socat unix-listen:/tmp/kd.sock -);clear;kd $w;done"'
+
+# redshift
+exec systemctl restart --user redshift
+
+# qemu
+assign [class = "qemu"] 4
+for_window [class = "qemu" ] floating enable
+
+# bottom
+assign [title = "BottomTerm" ] $ws0
+for_window [title = "BottomTerm"] fullscreen enable
+exec xfce4-terminal -T "BottomTerm" -e "btm --battery"

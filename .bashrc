@@ -31,11 +31,12 @@ PATH=$PATH:$HOME/go/bin
 
 # X
 export XSESSION="i3wm"
+#export XSESSION="awesome"
 export GTK_IM_MODULE=ibus
 export QT_IM_MODULE=ibus
 export XMODIFIERS="@im=ibus"
 
-# i3
+# for i3
 export TERMINAL=xfce4-terminal
 
 # history limit
@@ -50,7 +51,6 @@ PATH=$PATH:/home/du/opt/node-v18.20.3-linux-x64/bin
 # Load Angular CLI autocompletion.
 source <(ng completion script)
 
-
 # git PS1
 source /usr/share/git/git-prompt.sh
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -63,9 +63,10 @@ export CONFIG_BACKUP_DIR=~/Repository/github.com/duzhe/config
 # for kernelconfig
 export KERNEL_CONFIG_PATH=~/Repository/github.com/duzhe/config/kernel
 
-# fish
+# for fish
 export BROWSER="google-chrome-stable"
 
+# start fish
 if [[ -n $DISPLAY  && (! -n $NOFISH) ]]
 then
     exec fish
