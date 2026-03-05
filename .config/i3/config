@@ -21,14 +21,14 @@ font pango:monospace 10
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
-exec --no-startup-id dex --autostart --environment i3
+# exec --no-startup-id dex --autostart --environment i3
 
 # The combination of xss-lock, nm-applet and pactl is a popular choice, so
 # they are included here as an example. Modify as you see fit.
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork  -c 101620
 
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
@@ -136,7 +136,7 @@ set $ws9 "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+grave workspace number $ws0
+bindsym $mod+grave workspace $ws0
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -170,9 +170,9 @@ bindsym $mod+Shift+r restart
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'exit i3? ' -B 'Yes, exit i3' 'i3-msg exit'"
 
 # browser
-bindsym $mod+b exec google-chrome-stable
+bindsym $mod+b exec google-chrome-stable --password-store=basic
 set $incognito_dir "~/.google_chrome_incognito_user_data_template/" 
-bindsym $mod+n exec google-chrome-stable --incognito --user-data-dir="$(mktemp -d | tee /dev/stderr | xargs rsync -r $incognito_dir 2>&1)"
+bindsym $mod+n exec google-chrome-stable --password-store=basic --incognito --user-data-dir="$(mktemp -d | tee /dev/stderr | xargs rsync -r $incognito_dir 2>&1)"
 
 # PrintScreen
 bindsym Print      --release exec --no-startup-id scrot    -F ~/ScreenShot/$(date +%4Y%m%d-%H%M%S).png -e 'xclip -selection clipboard -target image/png -i $f'
@@ -211,8 +211,8 @@ bindsym $mod+r mode "resize"
 bar {
         position top
         status_command i3status
-        hidden_state hide
-        mode hide
+        #hidden_state hide
+        #mode hide
         font pango:DejaVu Sans Mono 16
 }
 
@@ -230,9 +230,6 @@ assign [class = "wechat"] 10
 assign [class = "thunderbird"] 9
 for_window [ class = "thunderbird" ] fullscreen enable
 exec --no-startup-id thunderbird-bin
-
-# start a terminal
-exec i3-sensible-terminal
 
 # Toggle beteen dock mode and hide mode
 bindsym $mod+m bar mode toggle
@@ -271,3 +268,6 @@ for_window [class = "qemu" ] floating enable
 assign [title = "BottomTerm" ] $ws0
 for_window [title = "BottomTerm"] fullscreen enable
 exec xfce4-terminal -T "BottomTerm" -e "btm --battery"
+
+# goto workspace 1 and start a terminal
+exec --no-startup-id i3-msg "workspace 1; exec i3-sensible-terminal"

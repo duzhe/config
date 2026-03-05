@@ -65,3 +65,10 @@
 
 # required for CHECKPOINT_RESTORE
 ./scripts/config --enable EXPERT # boolean
+
+# required for CHECKPOINT_RESTORE
+./scripts/config --enable PROC_CHILDREN
+
+# required by app-containers/runc
+./scripts/config --enable RT_GROUP_SCHED
+./scripts/config --enable CHECKPOINT_RESTORE

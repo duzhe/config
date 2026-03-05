@@ -17,4 +17,4 @@ fi
 
 f=$(urlencode "$(readlink -f "${1}")")
 
-nohup google-chrome-stable --user-data-dir="$HOME/.config/google-chrome-pdf" --app="$f" >/dev/null 2>&1 &
+nohup google-chrome-stable --password-store=basic --user-data-dir="$HOME/.config/google-chrome-pdf" --app="$f" >/dev/null 2>&1 &

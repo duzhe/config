@@ -122,6 +122,7 @@ x11-base/xorg-server
 x11-wm/i3
 x11-misc/rofi
 x11-misc/dmenu
+x11-misc/xss-lock
 x11-misc/i3lock
 x11-misc/i3status
 gnome-base/gnome-keyring
@@ -147,6 +148,7 @@ x11-misc/autorandr
 x11-misc/libinput-gestures
 x11-apps/xdpyinfo
 sys-apps/flatpak
+dev-util/flatpak-builder
 sys-apps/xdg-desktop-portal-gtk
 
 # applications
@@ -154,7 +156,8 @@ app-misc/gtypist
 app-misc/xmind
 dev-python/weasyprint
 mail-client/thunderbird-bin
-media-gfx/gimp
+# using flatpak
+#media-gfx/gimp
 media-video/smplayer
 net-analyzer/wireshark
 net-im/wechat-universal-bwrap
@@ -163,7 +166,8 @@ www-client/firefox-bin
 www-client/google-chrome
 media-sound/cmus  # mp3 player
 media-sound/id3ted # id3 editor
-media-gfx/librecad
+# using flatpak
+#media-gfx/librecad
 app-text/dictd
 app-i18n/translate-shell
 app-editors/vscode::gentoo
@@ -205,3 +209,6 @@ net-misc/tigervnc
 
 # fingerprint
 sys-auth/fprintd
+
+#
+games-util/game-device-udev-rules

@@ -28,6 +28,7 @@ do
             ;;
         /etc/* | /lib/*):
             DIST="${FILE#/}"
+            mkdir -p "$(dirname $DIST)"
             run cp "$FILE" "$DIST"
             run git add "$DIST"
             ;;
@@ -57,5 +58,6 @@ done <<'EOT'
 ~/.Xresources
 /etc/portage/make.conf
 /etc/portage/sets/myworld
+/etc/systemd/logind.conf
 /lib/systemd/system/dmesgd.service
 EOT
